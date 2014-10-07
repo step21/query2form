@@ -1,0 +1,98 @@
+# Thoughts
+
+* On first use _from should get a verification email, nothing happens until
+  an email account is verified. For now, just allow
+* 
+
+
+# Example
+
+* http://service.localhost/query2form/?_from=jon@rejon.org&_reply_to=wanglizhong@rejon.org&_subject=Sign Contributor Licensing Agreement&_cc=team@rejon.org&_success=You Successfully Signed the Form!&_body=This is the signing process for the Contributor license Agreement&_file=http://so.me/file.pdf&fullname=text&title=text&company=text&email=@_replyto@&address=text&sign-with-your-initials=text&_submit=Sign&_action=http://service.localhost/query2update
+
+** query2update can probably just have both
+** query2email should work interchangeably, just query2update should work
+   as emailing both parties, and query2update really should be something like:
+
+   http://service.localhost/query2update/some-list
+
+   And that some-list can just be a folder with a csv file in it listing out
+   some updates, and then when query2update gets hit with that some-list
+   and other query data, push one more update to the list, like a cheap
+   listing of items...
+
+
+
+# Special Fields
+
+## _from
+
+ ?_from=from@email.com
+
+## _replyto
+
+ ?_replyto=jon@rejon.org
+
+ <input type="text" name="_replyto" placeholder="Your email" />
+
+## _next
+
+ This will either be a next place of your choosing, or if empty and you have
+ in the query string _success, that message and subject will be displayed.
+
+ ?_next=http://someplace.com
+ <input type="hidden" name="_next" value="//site.io/thanks.html" />
+
+## _subject
+
+ At the top of the form as the page title.
+
+ ?_subject=email-subject
+ <input type="hidden" name="_subject" value="New submission!" />
+
+
+## _cc (FUTURE)
+
+
+ ?_cc=wlz@rejon.org,another@email.com,etc@etc.om
+ <input type="hidden" name="_cc" value="another@email.com" />
+
+
+## _success
+
+ ?_success=Some Success!
+
+## _body
+
+ ?_body=Body of the message to be sent, and also above the form.
+
+## _submit
+
+ Text for the submit button.
+
+ ?_submit=Submit
+
+## _link
+
+ A link to a file, like a PDF, etc.
+
+ ?_file=http://so.me/file.pdf
+
+## _linkname
+
+ The name of the link
+
+ ?_linkname=Some Name
+
+## _action
+
+ The action to perform for example:
+
+ ?_action=http://service.localhost/query2update/
+
+
+# Normal Fields
+
+## fieldname=TYPE_OF_FIELD
+
+ ?fullname=text
+ 
