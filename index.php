@@ -53,6 +53,8 @@ echo '    <form method="GET" action="' .
 
 echo '    <input type="hidden" name="_replyto" value="' . 
           $configs['_replyto'] . '" />' . "\n";
+echo '    <input type="hidden" name="_time" id="_time" value="' . 
+          $configs['_time'] . '" />' . "\n";
 echo '    <input type="hidden" name="_subject" value="' . 
           $configs['_subject'] . '" />' . "\n";
 echo '    <input type="hidden" name="_body" value="' . 
@@ -79,7 +81,7 @@ echo '            <input name="' . $key . '" type="name" class="form-control" id
 echo '        </div>' . "\n";
 }
 
-echo '        <button type="' . (empty($configs['_action']) ? 'button' : 'submit' ) . '" class="btn btn-primary btnr" ' . 
+echo '        <button type="' . (empty($configs['_action']) ? 'button' : 'submit' ) . '" class="btn btn-primary btnr" onclick="$(\'#_time\').attr(\'value\', getNow())"' . 
               (empty($configs['_action']) ? 'data-toggle="modal" data-target="#myModal"' : '') . '>' . 
     $submit . '</button>' . "\n";
 echo <<<END
