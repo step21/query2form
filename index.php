@@ -39,6 +39,8 @@ if ( ! $requirements_met )
 
 /* FORM LAYOUT */
 
+if ( !empty($configs['_body']) )
+{
 echo '    <div class="alert alert-info">' . 
          '<p>' . $configs['_body'] . '</p>' .
          ( !empty($configs['_link']) ? 
@@ -47,9 +49,32 @@ echo '    <div class="alert alert-info">' .
          ( !empty($configs['_linkname']) ? $configs['_linkname'] : 'File' ) . 
          '</button></form>' : '') . 
          '</div>' . "\n";
+}
+
+// action is now more a list of actions
+$now_action = '';
+if ( is_array($configs['_action']) )
+    $now_action = $configs['_action'][0] ;
+else
+    $now_action = $configs['_action'];
 
 echo '    <form method="GET" action="' . 
-          ( $configs['_action'] ? $configs['_action'] : '#' ). '">' . "\n";
+          ( $now_action ? $now_action : '#' ). '">' . "\n";
+
+/// increment number of actions printed globally
+$actions_printed++;
+
+if ( is_array($configs['_action']) )
+{
+    for ($ct=1; $ct< count($configs['_action']); $ct++)
+    {
+        echo '    <input type="hidden" name="_action[]" value="' . 
+                    $configs['_action'][$ct] . '" />' . "\n";
+    }
+
+}
+echo '    <input type="hidden" name="_next" value="' . 
+          $configs['_next'] . '" />' . "\n";
 
 echo '    <input type="hidden" name="_replyto" value="' . 
           $configs['_replyto'] . '" />' . "\n";
@@ -81,7 +106,8 @@ echo '            <input name="' . $key . '" type="name" class="form-control" id
 echo '        </div>' . "\n";
 }
 
-echo '        <button type="' . (empty($configs['_action']) ? 'button' : 'submit' ) . '" class="btn btn-primary btnr" onclick="$(\'#_time\').attr(\'value\', getNow())"' . 
+echo '        <button type="' . (empty($configs['_action']) ? 'button' : 'submit' ) . '" class="btn btn-primary btnr" '. 
+/* ' onclick="$(\'#_time\').attr(\'value\', getNow())"' .  */
               (empty($configs['_action']) ? 'data-toggle="modal" data-target="#myModal"' : '') . '>' . 
     $submit . '</button>' . "\n";
 echo <<<END
