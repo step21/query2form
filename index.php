@@ -73,7 +73,7 @@ if ( is_array($configs['_action']) )
     }
 
 }
-echo '    <input type="hidden" name="_next" value="' . 
+echo '    <input type="hidden" name="_id" value="' . 
           $configs['_id'] . '" />' . "\n";
 echo '    <input type="hidden" name="_next" value="' . 
           $configs['_next'] . '" />' . "\n";
