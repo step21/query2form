@@ -74,6 +74,8 @@ if ( is_array($configs['_action']) )
 
 }
 echo '    <input type="hidden" name="_next" value="' . 
+          $configs['_id'] . '" />' . "\n";
+echo '    <input type="hidden" name="_next" value="' . 
           $configs['_next'] . '" />' . "\n";
 
 echo '    <input type="hidden" name="_replyto" value="' . 
@@ -95,15 +97,48 @@ echo '    <input type="hidden" name="_linkname" value="' .
 
 foreach( $inputs as $key => $val )
 {
-    $placeholder = strtr( ucfirst($key), '-', ' ');
+
+    $input_type = substr( $key, -2 );
+
+
+    switch ( substr( $key, -2 ) )
+    {
+        case '_t':
+            $input_type = 'textarea';
+            $placeholder = substr( $key, 0, -2 );
+            break;
+        default:
+            $placeholder = $key;
+            $input_type = 'text';
+    }
+
+    $placeholder = strtr( ucfirst($placeholder), '-', ' ');
     $val = strtr( $val, '-', ' ');
     $submit = ($configs['_submit'] ? 
         strtr( ucfirst($configs['_submit']), '-', ' ') : "Submit" );
 
 echo '        <div class="form-group">' . "\n";
 echo '            <label for="' . $key . '">' . $placeholder . '</label>' . "\n";
-echo '            <input name="' . $key . '" type="name" class="form-control" id="' . $key . '" placeholder="Enter ' . $placeholder . '" value="' . $val . '">' . "\n";
-echo '        </div>' . "\n";
+
+switch ( $input_type )
+{
+    case 'textarea':
+        echo '            <textarea name="' . $key . 
+                      '" class="form-control" id="' . $key . 
+                      '" placeholder="Enter ' . $placeholder . '">' . 
+                      $val . '</textarea>' . "\n";
+        echo '        </div>' . "\n";
+        break;
+    case 'text':
+    default:
+        echo '            <input name="' . $key . 
+                      '" type="name" class="form-control" id="' . $key . 
+                      '" placeholder="Enter ' . $placeholder . '" value="' . 
+                      $val . '">' . "\n";
+        echo '        </div>' . "\n";
+    
+}
+
 }
 
 echo '        <button type="' . (empty($configs['_action']) ? 'button' : 'submit' ) . '" class="btn btn-primary btnr" '. 
