@@ -107,32 +107,50 @@ foreach( $inputs as $key => $val )
             $input_type = 'textarea';
             $placeholder = substr( $key, 0, -2 );
             break;
+        case '_h':
+            $input_type = 'hidden';
+            $placeholder = substr( $key, 0, -2 );
+            break;
+        case '_s':
+            $input_type = 'special';
+            $placeholder = substr( $key, 0, -2 );
+            break;
         default:
             $placeholder = $key;
             $input_type = 'text';
     }
 
     $placeholder = strtr( ucfirst($placeholder), '-', ' ');
-    $val = strtr( $val, '-', ' ');
+    // $val = strtr( $val, '-', ' ');
     $submit = ($configs['_submit'] ? 
         strtr( ucfirst($configs['_submit']), '-', ' ') : "Submit" );
 
 echo '        <div class="form-group">' . "\n";
-echo '            <label for="' . $key . '">' . $placeholder . '</label>' . "\n";
+
 
 switch ( $input_type )
 {
     case 'textarea':
+        echo '            <label for="' . $key . '">' . 
+            $placeholder . '</label>' . "\n";
         echo '            <textarea name="' . $key . 
-                      '" class="form-control" id="' . $key . 
+                      '" class="input-block-level form-control" id="' . $key . 
                       '" placeholder="Enter ' . $placeholder . '">' . 
                       $val . '</textarea>' . "\n";
         echo '        </div>' . "\n";
         break;
+    case 'special':
+    case 'hidden':
+        echo '            <input type="hidden" name="' . $key . 
+                      '" class="form-control" id="' . $key . 
+                      '" value="' . $val . '" />' . "\n";
+        break;
     case 'text':
     default:
+        echo '            <label for="' . $key . '">' . 
+            $placeholder . '</label>' . "\n";
         echo '            <input name="' . $key . 
-                      '" type="name" class="form-control" id="' . $key . 
+                      '" type="name" class="input-block-level form-control" ' .                       'id="' . $key . 
                       '" placeholder="Enter ' . $placeholder . '" value="' . 
                       $val . '">' . "\n";
         echo '        </div>' . "\n";
@@ -141,10 +159,12 @@ switch ( $input_type )
 
 }
 
+echo '        <div class="form-group">' . "\n";
 echo '        <button type="' . (empty($configs['_action']) ? 'button' : 'submit' ) . '" class="btn btn-primary btnr" '. 
 /* ' onclick="$(\'#_time\').attr(\'value\', getNow())"' .  */
               (empty($configs['_action']) ? 'data-toggle="modal" data-target="#myModal"' : '') . '>' . 
     $submit . '</button>' . "\n";
+echo '         </div>' . "\n";
 echo <<<END
     </form>
 
