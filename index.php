@@ -95,6 +95,7 @@ echo '    <input type="hidden" name="_link" value="' .
 echo '    <input type="hidden" name="_linkname" value="' . 
           $configs['_linkname'] . '" />' . "\n";
 
+// dumper($inputs);
 foreach( $inputs as $key => $val )
 {
 
@@ -117,43 +118,58 @@ foreach( $inputs as $key => $val )
             break;
         default:
             $placeholder = $key;
-            $input_type = 'text';
+            if ( is_array($val) )
+                $input_type = 'radio';
+            else
+                $input_type = 'text';
     }
 
-    $placeholder = strtr( ucfirst($placeholder), '-', ' ');
+    $placeholder = ucwords(strtr( $placeholder, '-', ' '));
     // $val = strtr( $val, '-', ' ');
     $submit = ($configs['_submit'] ? 
-        strtr( ucfirst($configs['_submit']), '-', ' ') : "Submit" );
+        ucwords(strtr( $configs['_submit'], '-', ' ')) : "Submit" );
 
 echo '        <div class="form-group">' . "\n";
 
-
+$spacer = '            ';
 switch ( $input_type )
 {
     case 'textarea':
-        echo '            <label for="' . $key . '">' . 
+        echo $spacer . '<label for="' . $key . '">' . 
             $placeholder . '</label>' . "\n";
-        echo '            <textarea name="' . $key . 
+        echo $spacer . '<textarea name="' . $key . 
                       '" class="input-block-level form-control" id="' . $key . 
                       '" placeholder="Enter ' . $placeholder . '">' . 
                       $val . '</textarea>' . "\n";
-        echo '        </div>' . "\n";
+        echo $spacer . '</div>' . "\n";
         break;
     case 'special':
     case 'hidden':
-        echo '            <input type="hidden" name="' . $key . 
+        echo $spacer . '<input type="hidden" name="' . $key . 
                       '" class="form-control" id="' . $key . 
                       '" value="' . $val . '" />' . "\n";
         break;
+    case 'radio':
+        $ct = 0;
+        echo $spacer . '<label for="' . $key . '">' . 
+            $placeholder . '</label>' . "\n";
+        foreach ( $val as $k => $v )
+        {
+            echo $spacer . '<input type="radio" name="' . $key . '" ' .
+                           ( ( 0 == $ct ) ? 'checked="checked" ' : '' ) .
+                           'value="' . $v . '">' . ucwords($v) . "</input>\n";
+            $ct++;
+        }
+        break;
     case 'text':
     default:
-        echo '            <label for="' . $key . '">' . 
+        echo $spacer . '<label for="' . $key . '">' . 
             $placeholder . '</label>' . "\n";
-        echo '            <input name="' . $key . 
+        echo $spacer . '<input name="' . $key . 
                       '" type="name" class="input-block-level form-control" ' .                       'id="' . $key . 
                       '" placeholder="Enter ' . $placeholder . '" value="' . 
                       $val . '">' . "\n";
-        echo '        </div>' . "\n";
+        echo $spacer . '</div>' . "\n";
     
 }
 
