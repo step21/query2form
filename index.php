@@ -129,12 +129,12 @@ foreach( $inputs as $key => $val )
     $submit = ($configs['_submit'] ? 
         ucwords(strtr( $configs['_submit'], '-', ' ')) : "Submit" );
 
-echo '        <div class="form-group">' . "\n";
 
 $spacer = '            ';
 switch ( $input_type )
 {
     case 'textarea':
+        echo $spacer . '<div class="form-group">' . "\n";
         echo $spacer . '<label for="' . $key . '">' . 
             $placeholder . '</label>' . "\n";
         echo $spacer . '<textarea name="' . $key . 
@@ -151,8 +151,9 @@ switch ( $input_type )
         break;
     case 'radio':
         $ct = 0;
+        echo $spacer . '<div class="form-group">' . "\n";
         echo $spacer . '<label for="' . $key . '">' . 
-            $placeholder . '</label>' . "\n";
+            $placeholder . '</label>' . "<br />\n";
         foreach ( $val as $k => $v )
         {
             echo $spacer . '<input type="radio" name="' . $key . '" ' .
@@ -160,9 +161,11 @@ switch ( $input_type )
                            'value="' . $v . '">' . ucwords($v) . "</input>\n";
             $ct++;
         }
+        echo $spacer . '</div>' . "\n";
         break;
     case 'text':
     default:
+        echo $spacer . '<div class="form-group">' . "\n";
         echo $spacer . '<label for="' . $key . '">' . 
             $placeholder . '</label>' . "\n";
         echo $spacer . '<input name="' . $key . 
