@@ -13,12 +13,8 @@
 */
 
 
-ini_set('display_startup_errors',1);
-ini_set('display_errors',1);
-error_reporting(-1);
-
-// if ( ini_get('display_errors') == -1 ) 
-
+include_once '../lib/config.php';
+include_once '../lib/utils.php';
 include_once '../lib/shared.php';
 include_once '../lib/header.php';
 
