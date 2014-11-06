@@ -90,6 +90,8 @@ echo '    <input type="hidden" name="_link" value="' .
           $configs['_link'] . '" />' . "\n";
 echo '    <input type="hidden" name="_linkname" value="' . 
           $configs['_linkname'] . '" />' . "\n";
+echo '    <input type="hidden" name="_processurl" value="' . 
+          $configs['_processurl'] . '" />' . "\n";
 
 // dumper($inputs);
 foreach( $inputs as $key => $val )
